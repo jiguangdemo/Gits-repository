@@ -1,0 +1,76 @@
+server:
+  port: 8120 # 服务端口
+
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.200.130:8848
+
+
+  # redis
+  redis:
+    host: 192.168.200.130
+    port: 6379
+    password: buer
+    #    database:
+  #    timeout: 10
+  #    password: 123456
+  #    pool:
+  #      minIdle: 1
+  #      maxIdle: 10
+  #      maxWait: 3
+  #      maxActive: 8
+
+  #    邮箱配置
+  profiles:
+    active: dev # 环境设置
+  application:
+    name: service-user # 服务名
+  datasource: # mysql数据库连接
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/nemt_user?serverTimezone=GMT%2B8
+    username: root
+    password: root
+  #spring:
+  jackson: #返回json的全局时间格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    ##邮箱密码验证
+  mail:
+    default: UTF-8
+    username: buerjiguang@163.com
+    password: HIBJXZDHXCLZLFRQ    #授权码
+    host: smtp.163.com
+  #  spring.mail.default-encoding=UTF-8
+  #  spring.mail.username=22-----246@qq.com
+  #  spring.mail.password=hxva----deced
+  #  spring.mail.host=smtp.qq.com
+
+#mybatis日志
+mybatis-plus:
+  mapper-locations: classpath:com/sdau/nemt/user/mapper/xml/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 设置日志级别
+#logging:
+#  level:
+#    root: info
+
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-beijing.aliyuncs.com
+      keyid: LTAI5tK9MqtxNo1o3KuF1zVA
+      keysecret: 01YY4hBARXnNL4FYESCDCgdsJnNy7a
+      bucketname: sdau-team
+ribbon:
+  MaxAutoRetries: 0 # 同一实例最大重试次数，不包括首次调用，默认0
+  MaxAutoRetriesNextServer: 1 # 重试其他实例的最大重试次数，不包括首次所选的server，默认1
+  ConnectTimeout: 10000 #10秒  连接建立的超时时长，默认1秒
+  ReadTimeout: 10000 #10秒  处理请求的超时时间，默认为1秒
+feign:
+  sentinel:
+    enabled: true

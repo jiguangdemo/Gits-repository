@@ -1,0 +1,35 @@
+//git凭证ID
+def git_auth = "nemtjar"
+//git的url地址
+def git_url = "https://gitee.com/buer-aurora/nemtjar.git"
+//镜像的版本号
+def tag = "latest"
+
+node {
+    stage('拉取代码') {
+      checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_url}"]]])
+    }
+
+    stage('编译，项目依赖工程') {
+      sh "mvn -f common clean install"
+    }
+
+    stage('编译，网关微服务') {
+      sh "mvn -f infrastructure/api_gateway clean package dockerfile:build"
+    }
+
+    stage('编译，service_volunteer') {
+      sh "mvn -f service/service_volunteer clean package dockerfile:build"
+    }
+    stage('编译，service_user') {
+      sh "mvn -f service/service_user clean package dockerfile:build"
+    }
+    stage('编译，service_oss') {
+      sh "mvn -f service/service_oss clean package dockerfile:build"
+    }
+    stage('编译，service_information') {
+      sh "mvn -f service/service_information clean package dockerfile:build"
+    }
+
+
+}
