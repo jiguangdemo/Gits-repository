@@ -1,2 +1,1 @@
-Git is a distributed version control system.
-Git is free software.
+# 记录项目的每次迭代
